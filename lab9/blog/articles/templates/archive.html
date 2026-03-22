@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Архив всех статей</title>
+        <link rel="stylesheet" href="{% static 'css/article.css' %}">
+    </head>
+    <body class="archive">
+        <!-- Слои для параллакса -->
+        <div class="parallax-container">
+            <div class="parallax-layer layer1" style="background-image: url('{% static 'img/layer1.png' %}');"></div>
+            <div class="parallax-layer layer2" style="background-image: url('{% static 'img/layer2.png' %}');"></div>
+            <div class="parallax-layer layer3" style="background-image: url('{% static 'img/layer3.png' %}');"></div>
+            <div class="parallax-layer layer4" style="background-image: url('{% static 'img/layer4.png' %}');"></div>
+            <div class="parallax-layer layer5" style="background-image: url('{% static 'img/layer5.png' %}');"></div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="header">
+                <div class="auth-links">
+                    {% if user.is_authenticated %}
+                        <span class="welcome-text">Привет, {{ user.username }}!</span>
+                        <a href="/logout/" class="auth-link">Выйти</a>
+                    {% else %}
+                        <a href="/login/" class="auth-link">Вход</a>
+                        <a href="/register/" class="auth-link">Регистрация</a>
+                    {% endif %}
+                </div>
+
+                <img src="{% static 'img/dpb-logo.png' %}" />
+
+                <div class="new-post-link">
+                    <a href="/article/new/" class="create-link">+ Новая статья</a>
+                </div>
+
+                <div class="service-title-block">
+                    <p class="service-title">Индивидуальный блог</p>
+                </div>
+            </div>
+
+            <div class="archive">
+                {% for post in posts %}
+                <div class="one-post">
+                    <div class="post-management">
+                        <h2 class="post-title">
+                            <a href="/article/{{ post.id }}/">{{ post.title }}</a>
+                        </h2>
+                        <button class="fold-button">Свернуть</button>
+                    </div>
+                    <div class="article-info">
+                        <div class="article-author">{{ post.author.username }}</div>
+                        <div class="article-created-date">{{ post.created_date }}</div>
+                    </div>
+                    <p class="article-text">{{ post.get_excerpt }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="{% static 'js/helloworld.js' %}"></script>
+        <script src="{% static 'js/fold-post.js' %}"></script>
+        <script src="{% static 'js/highlight-post.js' %}"></script>
+        <script src="{% static 'js/parallax.js' %}"></script>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Вход</title>
+        <link rel="stylesheet" href="{% static 'css/article.css' %}">
+    </head>
+    <body>
+        <div class="header">
+            <img src="{% static 'img/dpb-logo.png' %}" />
+        </div>
+        <div class="content">
+            <h1>Вход</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Имя пользователя" value="{{ username }}">
+                <input type="password" name="password" placeholder="Пароль">
+                <input type="submit" value="Войти">
+            </form>
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+            <p>Нет аккаунта? <a href="/register/">Зарегистрироваться</a></p>
+        </div>
+    </body>
+</html>
